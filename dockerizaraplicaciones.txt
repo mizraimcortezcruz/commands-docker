@@ -1,27 +1,56 @@
 https://apuntesit.tk/tutoriales/docker-networking-y-comandos-basicos/#:~:text=El%20comando%20docker%20que%20maneja,en%20archivos%20del%20tipo%20JSON.
 https://www.baeldung.com/ops/docker-removing-images#:~:text=Forcefully%20Remove%20Containers%20and%20Images&text=The%20%2Df%20flag%20is%20used,the%20running%20Docker%20containers%20forcefully.&text=The%20docker%20images%20%2Dqa%20will,forcefully%20remove%20the%20Docker%20image.
 
+https://stackoverflow.com/questions/33001750/connect-to-mysql-in-a-docker-container-from-the-host
+
 1. Verificamos la imagen del docker.
-PS C:\WINDOWS\system32> docker -v
+	PS C:\WINDOWS\system32> docker -v
 Docker version 20.10.8, build 3967b7d
 2. Listamos las imágenes
-PS C:\WINDOWS\system32> docker images
-PS C:\Users\MIZRAIM> docker image ls --format '{{.Repository}}:{{.Tag}}'
+	PS C:\WINDOWS\system32> docker images
+	PS C:\Users\MIZRAIM> docker image ls --format '{{.Repository}}:{{.Tag}}'
 3. Listamos los contenedor activos e inactivos
-PS C:\WINDOWS\system32> docker ps -a
-PS C:\Users\MIZRAIM> docker ps -a --format 'table {{.ID}}\t{{.Image}}\t{{.Status}}'
+	PS C:\WINDOWS\system32> docker ps -a
+	PS C:\Users\MIZRAIM> docker ps -a --format 'table {{.ID}}\t{{.Image}}\t{{.Status}}'
 4. Creamos la red usando el comando.
-PS C:\WINDOWS\system32> docker network create miredbcp
+	PS C:\WINDOWS\system32> docker network create miredbcp
 5. Verificamos la red creada.
-PS C:\WINDOWS\system32> docker network ls
-3cb37b080c8b   miredbcp   bridge    local
+	PS C:\WINDOWS\system32> docker network ls
+	3cb37b080c8b   miredbcp   bridge    local
 6. Creamos el contenedor mi-mysql8bcp apartir de la imagen de mysql versión 8, el nombre de nuestro contenedor será mi-mysql8bcp.
-PS C:\WINDOWS\system32> docker run -p 3308:3306 --name mi-mysql8bcp --network miredbcp -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=bdtipocambio -d mysql:8
+	PS C:\WINDOWS\system32> docker run -p 3308:3306 --name mi-mysql8bcp --network miredbcp -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=bdtipocambio -d mysql:8
 7. Eliminar un contenedor
-PS C:\Users\MIZRAIM> docker stop ed66ef6b589a
-PS C:\Users\MIZRAIM> docker rm ed66ef6b589a
+	PS C:\Users\MIZRAIM> docker stop ed66ef6b589a
+	PS C:\Users\MIZRAIM> docker rm ed66ef6b589a
 8. Eliminar una imagen
-PS C:\Users\MIZRAIM> docker rmi -f mysql:8
+	PS C:\Users\MIZRAIM> docker rmi -f mysql:8
+9. Iniciar el contenedor
+	PS C:\WINDOWS\system32> docker start 2b8cdc411055701f381f373195ddc844e12675c1ce98756e9720116f640f5033
+10. Ingresamos al contenedor
+	PS C:\WINDOWS\system32> docker exec -it mi-mysql8bcp bash
+		Ingresamos al servicio de mysql
+		root@2b8cdc411055:/# mysql -u root -p
+11. Ingresar a la imagen de mysql por el id de la imagen
+	PS C:\WINDOWS\system32> docker run -it --entrypoint /bin/bash 667ee8fb158e
+12. ver los logs de un contenedor
+	PS C:\WINDOWS\system32> docker logs mi-mysql8bcp
+
+
+mysql -h localhost -P 3308 --protocol=tcp -u root
+mysql -h localhost -P 3306 --protocol=tcp -u root
+mysql -P 3306 --protocol=tcp -u root -p
+mysql -P 3308 --protocol=tcp -u root -p
+mysql --host 127.0.0.1 --port 33060 --user root -proot
+
+======================
+
+Error response from daemon: Container is not running
+
+Connect to MySQL from the MySQL command line client
+docker run -it --network miredbcp --rm mysql mysql -mi-mysql8bcp -u root -p 123456
+docker run -it --rm mysql:8 --verbose --help
+
+mysql -u root -h mysql -p
 
 
 
