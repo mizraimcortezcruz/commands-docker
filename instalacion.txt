@@ -17,6 +17,7 @@ PS> dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /n
 
 Paso 2: comprobación de los requisitos para ejecutar WSL 2
 PS C:\WINDOWS\system32> winver
+PS C:\WINDOWS\system32> systeminfo
 
 Paso 3:
 PS> dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
@@ -34,3 +35,8 @@ Buscar aplicación Ubuntu Canonical Group Limited
 Usar para acceder las credenciales:
 usuario mizraim
 clave mizraim
+
+En caso de que al iniciar el servicio de docker desktop muestre el mensaje stopping.
+Se tiene que probar instalando docker desktop 4.0.0
+
+https://stackoverflow.com/questions/43041331/docker-forever-in-docker-is-starting-at-windows-task
