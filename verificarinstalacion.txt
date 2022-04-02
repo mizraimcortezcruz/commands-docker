@@ -1,0 +1,3 @@
+PS C:\WINDOWS\system32> docker -v
+PS C:\WINDOWS\system32> docker run hello-world
+PS C:\WINDOWS\system32> docker images
