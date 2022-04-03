@@ -38,8 +38,11 @@ Docker version 20.10.8, build 3967b7d
 		root@2b8cdc411055:/# mysql -u root -p
 	{{Otra forma de ingresar al contenedor}}
 		PS C:\WINDOWS\system32> docker exec -it a5fd4c7c6ef7 /bin/sh
+		# forma 1
 		# mysql -u root -p
 		# clave 123456
+		# forma 2
+		# mysql -uroot -p123456 -h 127.0.0.1
 		mysql> show databases;
 		mysql> use bdtipocambio;
 		mysql> show tables;
@@ -55,12 +58,17 @@ Docker version 20.10.8, build 3967b7d
 	"IPAddress": "172.18.0.2"
 
 ======================
+mysql -uroot -p123456 -h 127.0.0.1
+mysql -h 127.0.0.1 -P 3308 -u root
+mysql -h 127.0.0.1 -P 3308 -uroot  -p123456
+docker run --rm -it --net=host mysql/mi-mysql8bcp mysql \
+   -h 127.0.0.1 -P 33060 -u root -p123456
+mysql -h mi-mysql8bcp -P 3308 --protocol=tcp -u root
 mysql -h localhost -P 3308 --protocol=tcp -u root
 mysql -h localhost -P 3306 --protocol=tcp -u root
 mysql -P 3306 --protocol=tcp -u root -p
 mysql -P 3308 --protocol=tcp -u root -p
 mysql --host 127.0.0.1 --port 33060 --user root -proot
-
 mysql --protocol=tcp -P3308 -uroot -p 123456
 
 ======================
