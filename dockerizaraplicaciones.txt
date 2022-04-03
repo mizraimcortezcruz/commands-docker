@@ -3,6 +3,10 @@ https://www.baeldung.com/ops/docker-removing-images#:~:text=Forcefully%20Remove%
 
 https://stackoverflow.com/questions/33001750/connect-to-mysql-in-a-docker-container-from-the-host
 
+https://stackoverflow.com/questions/42781733/mysql-docker-file
+
+https://dev.to/lito/mysql-8-en-docker-de-manera-facil-y-para-toda-la-familia-3744
+
 1. Verificamos la imagen del docker.
 	PS C:\WINDOWS\system32> docker -v
 Docker version 20.10.8, build 3967b7d
@@ -18,29 +22,46 @@ Docker version 20.10.8, build 3967b7d
 	PS C:\WINDOWS\system32> docker network ls
 	3cb37b080c8b   miredbcp   bridge    local
 6. Creamos el contenedor mi-mysql8bcp apartir de la imagen de mysql versión 8, el nombre de nuestro contenedor será mi-mysql8bcp.
-	PS C:\WINDOWS\system32> docker run -p 3308:3306 --name mi-mysql8bcp --network miredbcp -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=bdtipocambio -d mysql:8
+	PS C:\WINDOWS\system32> docker run -p 3306:3306 --name mi-mysql8bcp --network miredbcp -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=bdtipocambio -d mysql:8
+	PS C:\WINDOWS\system32> docker run -p 3308:3306 --name mi-mysql8bcp --network miredbcp -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=bdtipocambio -d mysql:5.7
 7. Eliminar un contenedor
-	PS C:\Users\MIZRAIM> docker stop ed66ef6b589a
-	PS C:\Users\MIZRAIM> docker rm ed66ef6b589a
+	PS C:\Users\MIZRAIM> docker stop 0724398840e5
+	PS C:\Users\MIZRAIM> docker rm 0724398840e5
 8. Eliminar una imagen
 	PS C:\Users\MIZRAIM> docker rmi -f mysql:8
 9. Iniciar el contenedor
-	PS C:\WINDOWS\system32> docker start 2b8cdc411055701f381f373195ddc844e12675c1ce98756e9720116f640f5033
+	PS C:\WINDOWS\system32> docker start 0724398840e5b8e97dce3d5d195d3d805126f4448c839193a3e17f131bab9e71
 10. Ingresamos al contenedor
 	PS C:\WINDOWS\system32> docker exec -it mi-mysql8bcp bash
+	
 		Ingresamos al servicio de mysql
 		root@2b8cdc411055:/# mysql -u root -p
+	{{Otra forma de ingresar al contenedor}}
+		PS C:\WINDOWS\system32> docker exec -it a5fd4c7c6ef7 /bin/sh
+		# mysql -u root -p
+		# clave 123456
+		mysql> show databases;
+		mysql> use bdtipocambio;
+		mysql> show tables;
+		
 11. Ingresar a la imagen de mysql por el id de la imagen
 	PS C:\WINDOWS\system32> docker run -it --entrypoint /bin/bash 667ee8fb158e
 12. ver los logs de un contenedor
 	PS C:\WINDOWS\system32> docker logs mi-mysql8bcp
 
+13. ver todos los atributos de los contenedores en formato json
+	PS C:\WINDOWS\system32> docker inspect mi-mysql8bcp
+	"Gateway": "172.18.0.1"
+	"IPAddress": "172.18.0.2"
 
+======================
 mysql -h localhost -P 3308 --protocol=tcp -u root
 mysql -h localhost -P 3306 --protocol=tcp -u root
 mysql -P 3306 --protocol=tcp -u root -p
 mysql -P 3308 --protocol=tcp -u root -p
 mysql --host 127.0.0.1 --port 33060 --user root -proot
+
+mysql --protocol=tcp -P3308 -uroot -p 123456
 
 ======================
 
