@@ -25,12 +25,12 @@ Docker version 20.10.8, build 3967b7d
 	PS C:\WINDOWS\system32> docker run -p 3306:3306 --name mi-mysql8bcp --network miredbcp -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=bdtipocambio -d mysql:8
 	PS C:\WINDOWS\system32> docker run -p 3308:3306 --name mi-mysql8bcp --network miredbcp -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=bdtipocambio -d mysql:5.7
 7. Eliminar un contenedor
-	PS C:\Users\MIZRAIM> docker stop 0724398840e5
-	PS C:\Users\MIZRAIM> docker rm 0724398840e5
+	PS C:\Users\MIZRAIM> docker stop 8772f62caaaf
+	PS C:\Users\MIZRAIM> docker rm 8772f62caaaf
 8. Eliminar una imagen
-	PS C:\Users\MIZRAIM> docker rmi -f mysql:8
+	PS C:\Users\MIZRAIM> docker rmi -f mysql:5.7
 9. Iniciar el contenedor
-	PS C:\WINDOWS\system32> docker start 0724398840e5b8e97dce3d5d195d3d805126f4448c839193a3e17f131bab9e71
+	PS C:\WINDOWS\system32> docker start b7666da092da
 10. Ingresamos al contenedor
 	PS C:\WINDOWS\system32> docker exec -it mi-mysql8bcp bash
 	
@@ -56,6 +56,16 @@ Docker version 20.10.8, build 3967b7d
 	PS C:\WINDOWS\system32> docker inspect mi-mysql8bcp
 	"Gateway": "172.18.0.1"
 	"IPAddress": "172.18.0.2"
+	
+14. Crear la imagen del microservicio
+MIZRAIM@LAPTOP-02S3050I MINGW64 /c/programacion/cibertec/Proyectos/14_CURSOS/13-webflux/proyectos/retobcpreactive/spring-boot-reactive-tipocambio (master)
+$ docker image build -t ms-tipocambio:v1 -f Dockerfile .
+
+15. Crear el contenedor para el microservicio (omitir el mensaje de error)
+MIZRAIM@LAPTOP-02S3050I MINGW64 /c/programacion/cibertec/Proyectos/14_CURSOS/13-webflux/proyectos/retobcpreactive/spring-boot-reactive-tipocambio (master)
+$ docker run -p 6004:6004 --name micro-tipocambio --network miredbcp ms-tipocambio:v1
+time="2022-04-05T00:25:04-05:00" level=error msg="error waiting for container: invalid character 'u' looking for beginning of value"
+
 
 ======================
 mysql -uroot -p123456 -h 127.0.0.1
@@ -115,5 +125,6 @@ C:\Program Files\Docker\Docker\
 cd "C:\Program Files\Docker\Docker"
 ./DockerCli.exe -SwitchLinuxEngine
 ./DockerCli.exe -SwitchDaemon
+./DockerCli.exe -SwitchLinuxEngine
 
 C:\Users\MIZRAIM\.docker\daemon.json
