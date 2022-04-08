@@ -128,3 +128,9 @@ cd "C:\Program Files\Docker\Docker"
 ./DockerCli.exe -SwitchLinuxEngine
 
 C:\Users\MIZRAIM\.docker\daemon.json
+
+
+git remote set-url origin https://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@github.com/mizraimcortezcruz/spring-boot-tipocambio.git
+git remote set-url origin https://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@github.com/mizraimcortezcruz/spring-boot-reactive-tipocambio.git
+git remote set-url origin https://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@github.com/mizraimcortezcruz/frontend-tipocambiobcp.git
+git remote set-url origin https://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@github.com/mizraimcortezcruz/commands-docker.git
